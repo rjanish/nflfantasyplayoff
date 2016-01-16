@@ -9,33 +9,33 @@ three cards of each suit. The deal is uniform over player, value, and suit.
 import numpy as np
 
 
-def deal():
+class PlayoffDeck(object):
 	"""
+	This object represents the 4 decks of cards dealt, one to each player.
 	"""
-	cards = np.empty((4, 12), dtype=str) # decks: (player, card)
-	cards[:, :] = 'X' # X indicates card not yet drawn
-	suits = ['H', 'S', 'D', 'C'] 
-	num_players = 4
-	num_to_deal = 3 # number of cards of each suit given to each player
-	num_suits = 4
-	num_in_deck = num_to_deal*num_suits # number of cards in each player's deck
-	players = np.arange(num_players)
-	suits = ['H', 'S', 'D', 'C'] 
-	cards = np.empty((num_players, num_in_deck), dtype=str) # (player, card)
-	cards[:, :] = 'X' # X indicates card not yet drawn
-	for suit in suits[:2]:
-		for player in players:
-			own_filled = cards[player] != 'X'
-				# slots in current player's deck already filled by any suit 
-			other_filled = np.any(cards[:player, :] == suit, axis=0)	
-				# slots in other players' decks filled by only current suit
-			available = np.arange(num_in_deck)[~own_filled & ~other_filled]
-			print suit
-			print cards
-			print available, available.size
-			print
-			to_fill = np.random.choice(available, num_to_deal, replace=False)
-			cards[player, to_fill] = suit
-	return cards
+	def __init__(self):
+		"""
+		Initialize set of four empty decks.
+		"""
+		self.num_players = 4
+		self.num_each_suit = 3 # cards of each suit given to each player
+		self.num_suits = 4
+		self.num_in_deck = num_each_suit*num_suits # cards in each player deck
+		self.players = np.arange(num_players)
+		self.suits = ['H', 'S', 'D', 'C'] 
+		self.cards = np.empty((num_players, num_in_deck), dtype=str)
+		self.cards[:, :] = 'X' # X indicates card not yet drawn
+		self.nominal = [[s for s in suits] for player in players]
+			# see update_nomial
+
+	def update_nominal(self):
+		"""
+		Determine the nominally available suits for each slot of each deck.
+
+		The result is 'nominal' as it will check only the suits in the
+		corresponding slots in other players' decks, not considering the 
+		constraints imposed by the suits in the current player's other slots.
+		"""
+
 
 
