@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 """
 Script to randomly determine drafting order for fantasy playoff.
 """
