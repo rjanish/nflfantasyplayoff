@@ -3,6 +3,9 @@ Script to randomly determine drafting order for fantasy playoff.
 """
 
 
+import datetime as dt 
+import random 
+
 import numpy as np
 import click
 
@@ -112,6 +115,20 @@ def deal(num_players=4, num_each_suit=3):
             cards[target_index] = suit_chosen
     return cards
 
+
+def start_playoff(num_players=4, num_each_suit=3):
+    """ """
+    num_players = int(num_players)
+    num_each_suit = int(num_each_suit) 
+    cards = deal(num_players, num_each_suit) # player, rank
+    suits = list(cards[:, 0])
+    random.shuffle(suits) # determine draft order of suits
+    # print results
+    now = dt.datetime.now().strftime("%Y-%m-%d %H:%M")
+        # uses local machine time, it is not timezone-aware.
+    print "NFL Fantasy Playoff\n{}".format(now)
+    print "--------------------------"
+    print "Draft Order: {}".format(suits)
 
 
 
