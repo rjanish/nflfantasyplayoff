@@ -86,7 +86,7 @@ def deal(num_players=4, num_each_suit=3):
     if num_suits <= 4:
         suits = REGS_SUITS[:num_suits] 
     else:
-        suits = ["{}_".format(n + 1) for n in range(num_suits)]
+        suits = [str(n + 1) for n in range(num_suits)]
     cards = np.empty((num_players, num_in_deck), dtype=str)
     cards[:, :] = 'X' # X indicates card not yet drawn
     # fill decks
@@ -116,7 +116,13 @@ def deal(num_players=4, num_each_suit=3):
     return cards
 
 
-def start_playoff(num_players=4, num_each_suit=3):
+@click.command()
+@click.option('--num_players', default=4,
+              help='number of players (default 4)')
+@click.option('--num_each_suit', default=3,
+              help="number of cards of each suit to deal "
+                   "to each player (default 3)")
+def start_playoff(num_players, num_each_suit):
     """ """
     num_players = int(num_players)
     num_each_suit = int(num_each_suit) 
@@ -127,9 +133,17 @@ def start_playoff(num_players=4, num_each_suit=3):
     now = dt.datetime.now().strftime("%Y-%m-%d %H:%M")
         # uses local machine time, it is not timezone-aware.
     print "NFL Fantasy Playoff\n{}".format(now)
-    print "--------------------------"
-    print "Draft Order: {}".format(suits)
+    print 
+    print "Draft Order: {}".format(", ".join(suits))
+    print
+    player_list = map(str, np.arange(num_players) + 1)
+    print "  Player:  {}".format("  ".join(player_list))
+    print "-------------" + '-'*3*(num_players - 1)
+    for index in range(num_players*num_each_suit):
+        row = cards[:, index]
+        print "Round {:2d}:  {}".format(index + 1, "  ".join(row))
 
 
-
+if __name__ == "__main__":
+    start_playoff()
 
