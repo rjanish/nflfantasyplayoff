@@ -56,9 +56,9 @@ def construct_full_available(cards, suits):
 
 def deal(num_players=4, num_each_suit=3):
     """ 
-    Deals cards. Each play receives a deck containing cards of rank 1 to some
+    Deals cards. Each player receives a deck containing cards of rank 0 to some
     N. For a given rank, each player will have a card of a different suit. 
-    Additionally, within a player's deck their will be an equal number of
+    Additionally, within a player's deck there will be an equal number of
     cards of each suit.  Thus the number of suits must equal the number of
     players. The deck size is set by specifying the number of cards per suit
     in each deck. (Deck size is this number times the number of players.)
